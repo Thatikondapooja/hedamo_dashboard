@@ -25,9 +25,7 @@ const ChartContext = React.createContext<ChartContextProps | null>(null)
 
 function useChart() {
   const context = React.useContext(ChartContext)
-  if (!context) {
-    throw new Error('useChart must be used within a <ChartContainer />')
-  }
+  if (!context) throw new Error('useChart must be used within a <ChartContainer />')
   return context
 }
 
@@ -65,9 +63,7 @@ function ChartContainer({
 }
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
-  const colorConfig = Object.entries(config).filter(
-    ([, cfg]) => cfg.theme || cfg.color,
-  )
+  const colorConfig = Object.entries(config).filter(([_, cfg]) => cfg.theme || cfg.color)
   if (!colorConfig.length) return null
 
   return (
@@ -78,8 +74,7 @@ const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
 ${prefix} [data-chart=${id}] {
 ${colorConfig
               .map(([key, cfg]) => {
-                const color =
-                  cfg.theme?.[theme as keyof typeof cfg.theme] || cfg.color
+                const color = cfg.theme?.[theme as keyof typeof cfg.theme] || cfg.color
                 return color ? `  --color-${key}: ${color};` : null
               })
               .join('\n')}
@@ -94,7 +89,6 @@ ${colorConfig
 // ChartTooltip
 const ChartTooltip = RechartsPrimitive.Tooltip
 
-// Correctly typed TooltipContent
 interface ChartTooltipContentProps {
   active?: boolean
   payload?: Array<{
@@ -120,6 +114,7 @@ interface ChartTooltipContentProps {
     payload?: any
   ) => React.ReactNode
   color?: string
+  labelFormatter?: (value: any, payload?: any) => React.ReactNode // ✅ Added
 }
 
 function ChartTooltipContent({
@@ -138,7 +133,6 @@ function ChartTooltipContent({
   labelKey,
 }: ChartTooltipContentProps) {
   const { config } = useChart()
-
   if (!active || !payload?.length) return null
 
   const tooltipLabel = React.useMemo(() => {
@@ -259,7 +253,6 @@ function ChartLegendContent({
   nameKey,
 }: ChartLegendContentProps) {
   const { config } = useChart()
-
   if (!payload?.length) return null
 
   return (
@@ -273,7 +266,6 @@ function ChartLegendContent({
       {payload.map((item) => {
         const key = `${nameKey || item.dataKey || 'value'}`
         const itemConfig = getPayloadConfigFromPayload(config, item, key)
-
         return (
           <div
             key={item.value}
