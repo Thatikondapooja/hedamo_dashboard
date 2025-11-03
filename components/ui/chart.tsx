@@ -114,7 +114,7 @@ interface ChartTooltipContentProps {
     payload?: any
   ) => React.ReactNode
   color?: string
-  labelFormatter?: (value: any, payload?: any) => React.ReactNode // ✅ Added
+  labelFormatter?: (value: any, payload?: any) => React.ReactNode
 }
 
 function ChartTooltipContent({
@@ -239,7 +239,14 @@ function ChartTooltipContent({
 // ChartLegend
 const ChartLegend = RechartsPrimitive.Legend
 
-interface ChartLegendContentProps extends Pick<RechartsPrimitive.LegendProps, 'payload' | 'verticalAlign'> {
+interface ChartLegendContentProps {
+  payload?: Array<{
+    value: any
+    color?: string
+    dataKey?: string
+    name?: string
+  }>
+  verticalAlign?: 'top' | 'bottom' | 'middle'
   className?: string
   hideIcon?: boolean
   nameKey?: string
