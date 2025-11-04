@@ -40,10 +40,10 @@ export const api = {
   async updateProduct(id: string, data: Partial<Product>): Promise<Product> {
     await delay(600)
     const products = productStore.getProducts()
-    const product = products.find((p) => p.id === id)
+    const product = products.find((p: Product) => p.id === id)
     if (!product) throw new Error("Product not found")
     const updated = { ...product, ...data, updatedAt: new Date().toISOString().split("T")[0] }
-    const index = products.findIndex((p) => p.id === id)
+    const index = products.findIndex((p: Product) => p.id === id)
     products[index] = updated
     productStore.setProducts(products)
     return updated
@@ -52,7 +52,7 @@ export const api = {
   async deleteProduct(id: string): Promise<void> {
     await delay(400)
     const products = productStore.getProducts()
-    const index = products.findIndex((p) => p.id === id)
+    const index = products.findIndex((p: Product) => p.id === id)
     if (index !== -1) {
       products.splice(index, 1)
       productStore.setProducts(products)
