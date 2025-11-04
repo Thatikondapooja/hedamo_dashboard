@@ -13,10 +13,10 @@ export const api = {
     return productStore.getProducts()
   },
 
-  async getProduct(id: string): Promise<Product | null> {
+  async getProductById(id: string): Promise<Product | null> {
     await delay(200)
-    const products = productStore.getProducts()
-    return products.find((p) => p.id === id) || null
+    const products: Product[] = productStore.getProducts()
+    return products.find((p: Product) => p.id === id) || null
   },
 
   async createProduct(data: FormData): Promise<Product> {
