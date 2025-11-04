@@ -62,6 +62,8 @@ export const api = {
   // AI Analysis
   async analyzeProductTransparency(productId: string): Promise<AITransparencyResponse> {
     await delay(1200)
+    console.log("Analyzing product:", productId) // now it's "used"
+
     return {
       ...MOCK_AI_RESPONSE,
       score: Math.floor(Math.random() * 30) + 65,
