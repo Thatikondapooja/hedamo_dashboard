@@ -16,7 +16,7 @@ export default function ProductDetailPage() {
     const loadProduct = async () => {
       try {
         const id = params.id as string
-        const data = await api.getProduct(id)
+        const data = await api.getProductById(id)
         setProduct(data)
         if (data) {
           const analysis = await api.analyzeProductTransparency(id)
